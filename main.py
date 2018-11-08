@@ -10,7 +10,8 @@ class HashTableNode:
     def addValue(self,key,value):
         for i in self.pairs:
             if(i[0]==key):
-                raise RunTimeError #fail if that key is already in use
+                i[1]=value#overwrite the value if it is the same as another key
+                return
         self.pairs.append([key,value])
     def __repr__(self):
         return str(self.pairs)
@@ -56,14 +57,23 @@ class HashTable:
 
 
 h=HashTable(10)
+
 h.put("i",1)
 h.put("eeee",2)# these two values should have a collision
+
+h.put("j",3)
 print(h.dict)
+
 print("should be 1:"+str(h.get("i")))
 print("should be 2:"+str(h.get("eeee")))
+print("should be none:"+str(h.get("notAValidKey")))
+
+#test resize
 h.resize(7);
 print("should be 7:"+str(len(h.dict)))
 print(h.dict)
+
+#make sure the keys are still in place
 print("should be 1:"+str(h.get("i")))
 print("should be 2:"+str(h.get("eeee")))
 
@@ -73,6 +83,7 @@ print("should be 7:"+str(len(h.dict)))
 for i in range(0,10):
     h.put(str(i),1)
 print("should be 14:"+str(len(h.dict)))
+print(h.dict)
 
 
 """
